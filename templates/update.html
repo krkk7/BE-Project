@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>StudyPress | Education & Courses</title>
+    
+    <!-- Favicon and Touch Icons -->
+    <link href="{{url_for('static',filename='images/favicon.png')}}" rel="shortcut icon" type="image/png">
+    <link href="{{url_for('static',filename='images/apple-touch-icon.png')}}" rel="apple-touch-icon">
+    <link href="{{url_for('static',filename='images/apple-touch-icon-72x72.png')}}" rel="apple-touch-icon" sizes="72x72">
+    <link href="{{url_for('static',filename='images/apple-touch-icon-114x114.png')}}" rel="apple-touch-icon" sizes="114x114">
+    <link href="{{url_for('static',filename='images/apple-touch-icon-144x144.png')}}" rel="apple-touch-icon" sizes="144x144">
+    
+    <link rel="stylesheet" href="{{url_for('static',filename='assets/bootstrap/css/bootstrap.min.css')}} ">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="{{url_for('static',filename='assets/css/Header.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='assets/css/Profile-Edit-Form-1.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='assets/css/Profile-Edit-Form.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='assets/css/styles.css')}}">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+        <div class="container"><a class="navbar-brand" style="color:#21a9af;" href="#"></a><img src="{{url_for('static',filename='assets/img/logo-wide.png')}}"><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse float-end d-inline-flex flex-row justify-content-end align-items-end" id="navcol-1">
+                <ul class="navbar-nav">
+                    <li class="nav-item"></li>
+                </ul><span class="navbar-text"> </span>
+                <ul class="navbar-nav"></ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container profile profile-view" id="profile">
+        <div class="row">
+            <div class="col-md-12 alert-col relative">
+                <div class="alert alert-info alert-dismissible absolue center" role="alert"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button><span>Profile save with success</span></div>
+            </div>
+        </div>
+        {{user['email']}}
+        <form action="{{url_for('update')}}" method="post" enctype="multipart/form-data">
+            <div class="row profile-row">
+                <div class="col-md-4 relative">
+                    <div class="avatar">
+                        <div class="avatar-bg center"></div>
+                    </div><input class="form-control required autocomplete="off" form-control" type="file" name="file">
+                </div>
+                <div class="col-md-8">
+                    <h1>Profile </h1>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group mb-3"><label class="form-label">Firstname </label><input class="form-control" type="text" name="Name"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group mb-3"><label class="form-label">Lastname </label><input class="form-control" type="text" name="Surname"></div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3"><label class="form-label">Address</label><input class="form-control" type="address" autocomplete="off" required="" name="Address"></div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group mb-3"><label class="form-label">Country</label><input id="myInput" class="form-control" type="country" name="country" autocomplete="off" required=""></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group mb-3"><label class="form-label">State</label><input class="form-control" type="state" name="State" autocomplete="off" required=""></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group mb-3"><label class="form-label">Qualification</label><input id="mydInput" class="form-control" type="Qualification" name="education" autocomplete="off" required=""></div>
+                   
+                      
+                      <script>
+                      function autocomplete(inp, arr) {
+                        /*the autocomplete function takes two arguments,
+                        the text field element and an array of possible autocompleted values:*/
+                        var currentFocus;
+                        /*execute a function when someone writes in the text field:*/
+                        inp.addEventListener("input", function(e) {
+                            var a, b, i, val = this.value;
+                            /*close any already open lists of autocompleted values*/
+                            closeAllLists();
+                            if (!val) { return false;}
+                            currentFocus = -1;
+                            /*create a DIV element that will contain the items (values):*/
+                            a = document.createElement("DIV");
+                            a.setAttribute("id", this.id + "autocomplete-list");
+                            a.setAttribute("class", "autocomplete-items");
+                            /*append the DIV element as a child of the autocomplete container:*/
+                            this.parentNode.appendChild(a);
+                            /*for each item in the array...*/
+                            for (i = 0; i < arr.length; i++) {
+                              /*check if the item starts with the same letters as the text field value:*/
+                              if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                                /*create a DIV element for each matching element:*/
+                                b = document.createElement("DIV");
+                                /*make the matching letters bold:*/
+                                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                                b.innerHTML += arr[i].substr(val.length);
+                                /*insert a input field that will hold the current array item's value:*/
+                                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                                /*execute a function when someone clicks on the item value (DIV element):*/
+                                b.addEventListener("click", function(e) {
+                                    /*insert the value for the autocomplete text field:*/
+                                    inp.value = this.getElementsByTagName("input")[0].value;
+                                    /*close the list of autocompleted values,
+                                    (or any other open lists of autocompleted values:*/
+                                    closeAllLists();
+                                });
+                                a.appendChild(b);
+                              }
+                            }
+                        });
+                        /*execute a function presses a key on the keyboard:*/
+                        inp.addEventListener("keydown", function(e) {
+                            var x = document.getElementById(this.id + "autocomplete-list");
+                            if (x) x = x.getElementsByTagName("div");
+                            if (e.keyCode == 40) {
+                              /*If the arrow DOWN key is pressed,
+                              increase the currentFocus variable:*/
+                              currentFocus++;
+                              /*and and make the current item more visible:*/
+                              addActive(x);
+                            } else if (e.keyCode == 38) { //up
+                              /*If the arrow UP key is pressed,
+                              decrease the currentFocus variable:*/
+                              currentFocus--;
+                              /*and and make the current item more visible:*/
+                              addActive(x);
+                            } else if (e.keyCode == 13) {
+                              /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                              e.preventDefault();
+                              if (currentFocus > -1) {
+                                /*and simulate a click on the "active" item:*/
+                                if (x) x[currentFocus].click();
+                              }
+                            }
+                        });
+                        function addActive(x) {
+                          /*a function to classify an item as "active":*/
+                          if (!x) return false;
+                          /*start by removing the "active" class on all items:*/
+                          removeActive(x);
+                          if (currentFocus >= x.length) currentFocus = 0;
+                          if (currentFocus < 0) currentFocus = (x.length - 1);
+                          /*add class "autocomplete-active":*/
+                          x[currentFocus].classList.add("autocomplete-active");
+                        }
+                        function removeActive(x) {
+                          /*a function to remove the "active" class from all autocomplete items:*/
+                          for (var i = 0; i < x.length; i++) {
+                            x[i].classList.remove("autocomplete-active");
+                          }
+                        }
+                        function closeAllLists(elmnt) {
+                          /*close all autocomplete lists in the document,
+                          except the one passed as an argument:*/
+                          var x = document.getElementsByClassName("autocomplete-items");
+                          for (var i = 0; i < x.length; i++) {
+                            if (elmnt != x[i] && elmnt != inp) {
+                              x[i].parentNode.removeChild(x[i]);
+                            }
+                          }
+                        }
+                        /*execute a function when someone clicks in the document:*/
+                        document.addEventListener("click", function (e) {
+                            closeAllLists(e.target);
+                        });
+                      }
+                      
+                      /*An array containing all the country names in the world:*/
+                      var countrie = [
+                      "Psychology (B.A.)"
+                      ,"Psychology (B.S.)"
+                      ,"Organizational Leadership and Supervision (B.S.)"
+                      ,"Retailing and Consumer Science (B.S.)"
+                      ,"Administration and Supervision-Higher Education (M.Ed.)"
+                      ,"Curriculum and Instruction-Mathematics Education (M.Ed.)"
+                      ,"Special Education (M.Ed.)"
+                      ,"Mathematics (M.A.)"
+                      ,"Construction Management (M.S.)"
+                      ,"Foresight (M.S.)",
+                      
+"BE Mechanical Engineering",
+"Information Technology Engineering",
+"Metallurgical Engineering",
+"Automobile Engineering",
+"Aeronautical Engineering",
+"Aerospace Engineering",
+"Biomedical Engineering",
+"Computer science (B.E) ",
+        "Corporate Entrepreneurship (Undergraduate certificate)"
+                      ,"Designing and Developing Educational Graphics (Graduate certificate)"
+                      ,"Designing and Developing Educational Multimedia (Graduate certificate)"
+                      ,"Online Teaching and Learning (Graduate certificate)"
+                      ,"Computational Math Option (Graduate certificate)"
+                      ,"Financial Math Option (Graduate certificate)"
+                      ,"Mathematical Statistics Option (Graduate certificate)"
+                      ,"Construction Management (Post-baccalaureate/graduate certificate)"
+                      ,"Retailing and Consumer Science (Undergraduate certificate)"
+                      ,"Strategic Foresight (Post-baccalaureate/graduate certificate)"
+                      ,"Advanced Subsea Engineering (Graduate certificate)"
+                      ,"Subsea Engineering (Graduate certificate)"
+                      ,"Subsea Engineering (M.S.)"
+                      ,"Finance (B.S.)"
+                      ,"General Business (B.S.)"
+                      ,"Criminology (B.S.)"
+                      ,"Psychology (B.S.)"
+                      ,"Public Service Leadership (B.S.)"
+                      ,"Business Administration (M.B.A.)"
+                      ,"Human Resource Management (M.A.)"
+                      ,"Finance (M.S.)"
+                      ,"Instructional Design and Technology (M.S.)"
+                      ,"Engineering Management (M.S.)"
+                      ,"Environmental Science (M.S.)"
+                      ,"Software Engineering (M.S.)"
+                      ,"Systems Engineering (M.S.)"
+                      ,"7-12 Technology Applications (Graduate certificate)"
+                      ,"EC-12 Technology Applications (Graduate certificate)"
+                      ,"Distance Educator Certificate (Graduate certificate)"
+                      ,"Fitness and Human Performance (Graduate certificate)"
+                      ,"Master Technology Teacher (Graduate certificate)"
+                      ,"Performance Technology (Graduate certificate)"
+                      ,"Software Engineering (Graduate certificate)"
+                      ,"Systems Engineering (Graduate certificate)"
+                      ,"Enterprise Information Systems (B.B.A.)"
+                      ,"Finance (B.B.A.)"
+                      ,"General Business (B.B.A.)"
+                      ,"Insurance and Risk Management (B.B.A.)"
+                      ,"International Business (B.B.A.)"
+                      ,"Management (B.B.A.)"
+                      ,"Marketing (B.B.A.)"
+                      ,"Supply Chain Management (B.B.A.)"
+                      ,"Humanities (B.A.)"
+                      ,"Professional Writing (B.S.)"
+                      ,"Psychology (B.S.)"
+                      ,"Criminal Justice (B.S.)"
+                      ,"Criminal Justice (B.A.A.S.)"
+                      ,"Applied Administration (B.A.A.S.)"
+                      ,"Interdisciplinary Studies (B.S.)"
+                      ,"Non-Profit Management (M.A.)"
+                      ,"Criminal Justice (M.S.)"
+                      ,"Teaching (M.A.)"
+                      ,"AutoCAD Certification (Non-credit certificate)"
+                      ,"Professional Land Management (Non-credit certificate)"
+                      ,"Retail Management (Non-credit certificate)"
+                      ,"Right of Way (Non-credit certificate)"
+                      ,"Skills for the 21st Century (Non-credit certificate)"
+                      ,"Applied Arts and Sciences (B.A.A.S.)"
+                      ,"Communication (B.A.)"
+                      ,"Communication (B.S.)"
+                      ,"Criminal Justice (B.S.)"
+                      ,"Humanities-Creative Writing (B.A.)"
+                      ,"Humanities-English (B.A.)"
+                      ,"Humanities-History (B.A.)"
+                      ,"Psychology (B.A.)"
+                      ,"Psychology (B.S.)"
+                      ,"Healthcare Administration (B.B.A.)"
+                      ,"Management (B.B.A.)"
+                      ,"Marketing (B.B.A.)"
+                      ,"General Business (B.B.A.)"
+                      ,"Computer Information Systems (M.S.)"
+                      ,"Interdisciplinary Studies (M.A.)"
+                      ,"Publishing (M.S.)"
+                      ,"Global M.B.A (M.B.A.)"
+                      ,"Global M.B.A. Bridge (M.B.A.)"
+                      ,"Strategic M.B.A. (M.B.A.)"
+                      ,"Strategic M.B.A. Bridge (M.B.A.)"
+                      ,"Economic Development and Entrepreneurship (M.S.)"
+                      ,"Adult and Higher Education (M.Ed.)"
+                      ,"Literacy Studies (M.Ed.)"
+                      ,"Special Education (M.Ed.)"
+                      ,"Special Education-Autism Spectrum Disorders (M.Ed.)"
+                      ,"Elementary Education (M.Ed.)"
+                      ,"Professional Coaching (Graduate certificate)"
+                      ,"Reading Specialist Certification"
+                      ,"Superintendent Certification"
+                      ,"Victoria Online Initial Certification for Educators (Post-baccalaureate)"
+                      ,"Computer Science (M.S.)"
+                      ,"Creative Writing (M.F.A.)"
+                      ,"Curriculum and Instruction - Educational Technology (M.Ed.)"
+                      ,"Master Reading Teacher (MRT) Certification"
+                      ];
+                      
+                      /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+                      autocomplete(document.getElementById("mydInput"), countrie);
+                      </script>
+                      
+                    <!--Make sure the form has the autocomplete function switched off:-->
+                    
+                    <script>
+                    function autocomplete(inp, arr) {
+                      /*the autocomplete function takes two arguments,
+                      the text field element and an array of possible autocompleted values:*/
+                      var currentFocus;
+                      /*execute a function when someone writes in the text field:*/
+                      inp.addEventListener("input", function(e) {
+                          var a, b, i, val = this.value;
+                          /*close any already open lists of autocompleted values*/
+                          closeAllLists();
+                          if (!val) { return false;}
+                          currentFocus = -1;
+                          /*create a DIV element that will contain the items (values):*/
+                          a = document.createElement("DIV");
+                          a.setAttribute("id", this.id + "autocomplete-list");
+                          a.setAttribute("class", "autocomplete-items");
+                          /*append the DIV element as a child of the autocomplete container:*/
+                          this.parentNode.appendChild(a);
+                          /*for each item in the array...*/
+                          for (i = 0; i < arr.length; i++) {
+                            /*check if the item starts with the same letters as the text field value:*/
+                            if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                              /*create a DIV element for each matching element:*/
+                              b = document.createElement("DIV");
+                              /*make the matching letters bold:*/
+                              b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                              b.innerHTML += arr[i].substr(val.length);
+                              /*insert a input field that will hold the current array item's value:*/
+                              b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                              /*execute a function when someone clicks on the item value (DIV element):*/
+                              b.addEventListener("click", function(e) {
+                                  /*insert the value for the autocomplete text field:*/
+                                  inp.value = this.getElementsByTagName("input")[0].value;
+                                  /*close the list of autocompleted values,
+                                  (or any other open lists of autocompleted values:*/
+                                  closeAllLists();
+                              });
+                              a.appendChild(b);
+                            }
+                          }
+                      });
+                      /*execute a function presses a key on the keyboard:*/
+                      inp.addEventListener("keydown", function(e) {
+                          var x = document.getElementById(this.id + "autocomplete-list");
+                          if (x) x = x.getElementsByTagName("div");
+                          if (e.keyCode == 40) {
+                            /*If the arrow DOWN key is pressed,
+                            increase the currentFocus variable:*/
+                            currentFocus++;
+                            /*and and make the current item more visible:*/
+                            addActive(x);
+                          } else if (e.keyCode == 38) { //up
+                            /*If the arrow UP key is pressed,
+                            decrease the currentFocus variable:*/
+                            currentFocus--;
+                            /*and and make the current item more visible:*/
+                            addActive(x);
+                          } else if (e.keyCode == 13) {
+                            /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                            e.preventDefault();
+                            if (currentFocus > -1) {
+                              /*and simulate a click on the "active" item:*/
+                              if (x) x[currentFocus].click();
+                            }
+                          }
+                      });
+                      function addActive(x) {
+                        /*a function to classify an item as "active":*/
+                        if (!x) return false;
+                        /*start by removing the "active" class on all items:*/
+                        removeActive(x);
+                        if (currentFocus >= x.length) currentFocus = 0;
+                        if (currentFocus < 0) currentFocus = (x.length - 1);
+                        /*add class "autocomplete-active":*/
+                        x[currentFocus].classList.add("autocomplete-active");
+                      }
+                      function removeActive(x) {
+                        /*a function to remove the "active" class from all autocomplete items:*/
+                        for (var i = 0; i < x.length; i++) {
+                          x[i].classList.remove("autocomplete-active");
+                        }
+                      }
+                      function closeAllLists(elmnt) {
+                        /*close all autocomplete lists in the document,
+                        except the one passed as an argument:*/
+                        var x = document.getElementsByClassName("autocomplete-items");
+                        for (var i = 0; i < x.length; i++) {
+                          if (elmnt != x[i] && elmnt != inp) {
+                            x[i].parentNode.removeChild(x[i]);
+                          }
+                        }
+                      }
+                      /*execute a function when someone clicks in the document:*/
+                      document.addEventListener("click", function (e) {
+                          closeAllLists(e.target);
+                      });
+                    }
+                    
+                    /*An array containing all the country names in the world:*/
+                    var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
+                    
+                    /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+                    autocomplete(document.getElementById("myInput"), countries);
+                    </script>
+
+                    
+
+
+
+
+
+
+
+
+
+
+                    <div class="form-group mb-3"><label class="form-label">Area of Interest</label><input class="form-control"  id="mytInput" type="text" name="topic" autocomplete="off" required="">
+                      
+<script>
+  function autocomplete(inp, arr) {
+    /*the autocomplete function takes two arguments,
+    the text field element and an array of possible autocompleted values:*/
+    var currentFocus;
+    /*execute a function when someone writes in the text field:*/
+    inp.addEventListener("input", function(e) {
+        var a, b, i, val = this.value;
+        /*close any already open lists of autocompleted values*/
+        closeAllLists();
+        if (!val) { return false;}
+        currentFocus = -1;
+        /*create a DIV element that will contain the items (values):*/
+        a = document.createElement("DIV");
+        a.setAttribute("id", this.id + "autocomplete-list");
+        a.setAttribute("class", "autocomplete-items");
+        /*append the DIV element as a child of the autocomplete container:*/
+        this.parentNode.appendChild(a);
+        /*for each item in the array...*/
+        for (i = 0; i < arr.length; i++) {
+          /*check if the item starts with the same letters as the text field value:*/
+          if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            /*create a DIV element for each matching element:*/
+            b = document.createElement("DIV");
+            /*make the matching letters bold:*/
+            b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+            b.innerHTML += arr[i].substr(val.length);
+            /*insert a input field that will hold the current array item's value:*/
+            b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+            /*execute a function when someone clicks on the item value (DIV element):*/
+            b.addEventListener("click", function(e) {
+                /*insert the value for the autocomplete text field:*/
+                inp.value = this.getElementsByTagName("input")[0].value;
+                /*close the list of autocompleted values,
+                (or any other open lists of autocompleted values:*/
+                closeAllLists();
+            });
+            a.appendChild(b);
+          }
+        }
+    });
+    /*execute a function presses a key on the keyboard:*/
+    inp.addEventListener("keydown", function(e) {
+        var x = document.getElementById(this.id + "autocomplete-list");
+        if (x) x = x.getElementsByTagName("div");
+        if (e.keyCode == 40) {
+          /*If the arrow DOWN key is pressed,
+          increase the currentFocus variable:*/
+          currentFocus++;
+          /*and and make the current item more visible:*/
+          addActive(x);
+        } else if (e.keyCode == 38) { //up
+          /*If the arrow UP key is pressed,
+          decrease the currentFocus variable:*/
+          currentFocus--;
+          /*and and make the current item more visible:*/
+          addActive(x);
+        } else if (e.keyCode == 13) {
+          /*If the ENTER key is pressed, prevent the form from being submitted,*/
+          e.preventDefault();
+          if (currentFocus > -1) {
+            /*and simulate a click on the "active" item:*/
+            if (x) x[currentFocus].click();
+          }
+        }
+    });
+    function addActive(x) {
+      /*a function to classify an item as "active":*/
+      if (!x) return false;
+      /*start by removing the "active" class on all items:*/
+      removeActive(x);
+      if (currentFocus >= x.length) currentFocus = 0;
+      if (currentFocus < 0) currentFocus = (x.length - 1);
+      /*add class "autocomplete-active":*/
+      x[currentFocus].classList.add("autocomplete-active");
+    }
+    function removeActive(x) {
+      /*a function to remove the "active" class from all autocomplete items:*/
+      for (var i = 0; i < x.length; i++) {
+        x[i].classList.remove("autocomplete-active");
+      }
+    }
+    function closeAllLists(elmnt) {
+      /*close all autocomplete lists in the document,
+      except the one passed as an argument:*/
+      var x = document.getElementsByClassName("autocomplete-items");
+      for (var i = 0; i < x.length; i++) {
+        if (elmnt != x[i] && elmnt != inp) {
+          x[i].parentNode.removeChild(x[i]);
+        }
+      }
+    }
+    /*execute a function when someone clicks in the document:*/
+    document.addEventListener("click", function (e) {
+        closeAllLists(e.target);
+    });
+  }
+  
+  /*An array containing all the country names in the world:*/
+  var cotries = ["machine learning","business essential","security","mobile and web development","data analysis","History","music and art","Marketing","algorithms","research"];
+  
+  /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+  autocomplete(document.getElementById("mytInput"), cotries);
+  </script>
+   
+                      <div class="col-md-12 content-right"><button class="btn btn-primary form-btn" type="submit">SAVE </button></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p style="color: #F2184F;font-size: 20px;font-weight: bold;">&nbsp;Account Settings</p><button class="btn btn-primary round" type="button" style="color: var(--bs-light);background: var(--bs-green);">Forget password</button>
+            <p></p>
+            <div></div><button class="btn btn-primary round" type="button" style="color: var(--bs-light);background: var(--bs-red);">Delete Account</button>
+        </div>
+    </div><footer id="footer">
+    
+    <div style= "background: #F2184F;text-align: center; margin: 0px; padding:10px">
+        <p style= "color:white; font-family: raleway">Copyright (c) 2022 kesavan.kishore.krishna</p>
+    </div>
+</footer>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/Profile-Edit-Form.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+﻿index,Name,Duration,Price,Course_difficulty,Course_organization,Category,Subcategory,Type
+1,(ISC)Â² Systems Security Certified Practitioner (SSCP),2.5hrs,5000,Beginner,(ISC)Â²,information technology,security,course
+2,Access Control,3.4hrs,8000,Intermediate,(ISC)Â²,information technology,security,course
+3,Security Operations and Administration ,2.4hrs,4524,Mixed,(ISC)Â²,information technology,security,course
+4,"Identifiying,Monitoring,and Analyzing Risk and Incident Response and Recovery",6hrs,45524,Beginner,(ISC)Â²,information technology,security,course
+
+
+5,Crytography,5hrs,4758,Beginner,(ISC)Â²,information technology,security,course
+6,Networks and Communications Sceurity,4hrs,455,Beginner,(ISC)Â²,information technology,security,course
+7,Systems and Application Security, 2hrs,55455,Beginner,(ISC)Â²,information technology,security,course
+8,AI for Medicine Specilaization, 2.50hrs,5548,Intermediate,DeepLearning.AI,data science,machine learning,course
+9,AI for Medicine Diagnosis,2.5hrs,24556,Intermediate,DeepLearning.AI,data science,machine learning,course
+10,AI for Medicine Prognosis,3.4hrs,5425,Intermediate,DeepLearning.AI,data science,machine learning,course
+11,AI for Medicine Treatment,2.4hrs,1452,Intermediate,DeepLearning.AI,data science,machine learning,course
+12,Supply Chain Management Specialization,6hrs,5541,Beginner,Rutgers,business,business essential,course
+13,Supply Chain Management Sourcing,5hrs,5214,Beginner,Rutgers,business,business essential,course
+14,Supply Chain Management Strategy,4hrs,5555,Beginner,Rutgers,business,business essential,course
+15,Supply Chain Planning, 2hrs,4452,Beginner,Rutgers,business,business essential,course
+16,Supply Chain Operations, 2.50hrs,7744,Beginner,Rutgers,business,business essential,course
+17,Supply Chain Logistics,2.5hrs,5554,Intermediate,Rutgers,business,business essential,course
+18,Full-Stack Web Development with React,3.4hrs,4452,Intermediate,The HONG KONG UNIVERSITY OF SCIENCE AND TECHNOLOGY,computer science,mobile and web development,specialization
+19,Front-End Web UI Frameworks and Tools:Bootstrap 4,2.4hrs,75596,Intermediate,The HONG KONG UNIVERSITY OF SCIENCE AND TECHNOLOGY,computer science,mobile and web development,specialization
+20,Front-End Web Development with React,6hrs,4751,Beginner,The HONG KONG UNIVERSITY OF SCIENCE AND TECHNOLOGY,computer science,mobile and web development,specialization
+21,"Server-side Development with NodeJs, Express and MongoDB",5hrs,5844,Intermediate,The HONG KONG UNIVERSITY OF SCIENCE AND TECHNOLOGY,computer science,mobile and web development,specialization
+22,IBM Full Stack Cloud Developer,4hrs,4558,Beginner,IBM,information technology,cloud computing,Professional Certificate
+23,Introduction to Cloud Computing, 2hrs,5447,Beginner,IBM,information technology,cloud computing,Professional Certificate
+24,"Introduction to Web Development with HTML,CSS,JavaScript", 2.50hrs,5447,Beginner,IBM,information technology,cloud computing,Professional Certificate
+25,Developing Cloud Native Appplications,2.5hrs,44475,Beginner,IBM,information technology,cloud computing,Professional Certificate
+26,Developing Cloud Apps with Nodejs and React,3.4hrs,447,Beginner,IBM,information technology,cloud computing,Professional Certificate
+27,"Introduction to Containers w/Docker,Kubernetes & OpenShift",2.4hrs,5447,Beginner,IBM,information technology,cloud computing,Professional Certificate
+28,Data Science Fundamentals with Python and SQL,6hrs,577,Beginner,IBM,data science,data analysis,specialization
+29,Tools for Data Science,5hrs,41447,Beginner,IBM,data science,data analysis,specialization
+30,"Python for Data Science , AI & Development",4hrs,1444,Intermediate,IBM,data science,data analysis,specialization
+31,Python Project for Data Science, 2hrs,554778,Beginner,IBM,data science,data analysis,specialization
+32,Statistics for Data Science with python, 2.50hrs,44475,Intermediate,IBM,data science,data analysis,specialization
+33,Databases and SQL for Data Science with Python,2.5hrs,4447,Intermediate,IBM,data science,data analysis,specialization
+34,"William Shakespeare's Twelfth Night: Comedy, Conflict, and Community",3.4hrs,55475,Beginner,University of colordo Boulder,Arts and Humanities,History,course
+35,Buddhism and Modern Psychology,2.4hrs,5585,Beginner,Princeton University,Arts and Humanities,music and art,course
+36,Indigenous Canada,6hrs,58855,Beginner,University of Alberta,Arts and Humanities,History,course
+37,English Composition 1,5hrs,5585,Beginner,Duke University,Arts and Humanities,History,course
+38,Fashion as Design,4hrs,55558,Beginner,The Museum of Modern Art,Arts and Humanities,History,course
+39,"The Modern World, Part One:Global History from 1760 to 1910", 2hrs,4554,Beginner,University of Virgina,Arts and Humanities,History,course
+40,Global Diplomacy-Diplomacy in the Modern World, 2.50hrs,4741,Beginner,University of London,Arts and Humanities,History,course
+41,Understanding Einstein:The Special Theory of Relativity,3.5hrs,5441,Beginner,Stanford University,Arts and Humanities,History,course
+42,In the Studio:postwar Abstract Painting,2.5hrs,5484,Beginner,The museum of Modern Art,Arts and Humanities,History,course
+43,Magic in the Middle Ages,3.4hrs,2698,Beginner,Universitat de Barcelona,Arts and Humanities,History,course
+44,Terrorism and Counterterrorism:Comparing Theory and Partice,2.4hrs,9826,Beginner,Universitat Leiden,Arts and Humanities,History,course
+45,Introduction to Ancient Egyot and Its Civilization,6hrs,4875,Beginner,University of Pennsylvania,Arts and Humanities,History,course
+46,Ancient Philosophy:Plato&His Predecessors,5hrs,5986,Beginner,University of Pennsylvania,Arts and Humanities,History,course
+47,Facebook Social Media Marketing,4hrs,5636,Beginner,Meta,business,Marketing,course
+48,Introduction to Social Media Marketing, 2hrs,3566,Beginner,Meta,business,Marketing,course
+49,Social Media Management, 2.50hrs,35655,Beginner,Meta,business,Marketing,course
+50,Fundamentals of Social Media Advertising,2.3hrs,5656,Beginner,Meta,business,Marketing,course
+51,Advertising with Facebook,1.86hrs,36265,Beginner,Meta,business,Marketing,course
+52,Measure and Optimize Social Media Marketing  Campaigns,3.25hrs,5652,Beginner,Meta,business,Marketing,course
+53,Facebook Social Media Marketing Capstone,4.25hrs,6565,Beginner,Meta,business,Marketing,course
+54,Salesforce Sales Development Representative,6.12hrs,3265,Beginner,Salesforce SV Academy,business,business essential,Professional Certificate
+55,Groundwork for Success in Sales Development,5hrs,26565,Beginner,Salesforce SV Academy,business,business essential,Professional Certificate
+56,Foundations for Interviewing with Confidence,45hrs,2656,Beginner,Salesforce SV Academy,business,business essential,Professional Certificate
+57,Conversational Selling Playbook for SDRs,3.5hrs,6556,Beginner,Salesforce SV Academy,business,business essential,Professional Certificate
+58,Boosting Productivity through the Tech Stack,2.5hrs,5656,Beginner,Salesforce SV Academy,business,business essential,Professional Certificate
+59,Practical Guide to Navigationg Professional Relationships,3.4hrs,5445,Beginner,Salesforce SV Academy,business,business essential,Professional Certificate
+60,Big Data Analysis with Scala and Spark,2.4hrs,5000,Intermediate,EPFL,computer science,algorithms,course
+61,Data Structures and Algorithms,6hrs,8000,Intermediate,University of California San Diego HSE University,computer science,algorithms,specialization
+62,Algorithms,5hrs,4524,Intermediate,Stanford University,computer science,algorithms,specialization
+63,Introduction to Discrete Mathematics for Computer Science,4hrs,45524,Intermediate,University of California San Diego HSE University,computer science,algorithms,specialization
+64,"Algorithms, Part I", 2hrs,4758,Intermediate,Princeton University,computer science,algorithms,course
+65,Algorithmic Toolbox, 2.50hrs,455,Intermediate,University of California San Diego HSE University,computer science,algorithms,specialization
+66,"Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming",2.3hrs,55455,Intermediate,Stanford University,computer science,algorithms,course
+67,Introduction to Logic,1.86hrs,5548,Intermediate,Stanford University,math and logic,math and logic,course
+68,Understanding Medical Research: Your Facebook Friend is Wrong,3.25hrs,24556,Beginner,Yale University,health,research,course
+,,,,,,,,
