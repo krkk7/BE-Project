@@ -71,8 +71,12 @@ def home():
     user=session["user"]
     id=user["localId"]
     st=db.collection('users').document(id).get()
-    data=st.to_dict()
-    return render_template('index.html',data=data)
+    dat=st.to_dict()
+    tar=dat['topic']
+    res1=df['Name'].tolist()
+    res=res1[:6]
+
+    return render_template('index.html',data=res)
 
 
 @app.route("/", methods =['GET', 'POST'])
