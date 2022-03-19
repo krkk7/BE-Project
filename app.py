@@ -293,37 +293,14 @@ def select():
 
 @app.route('/courseex', methods=['GET', 'POST'])
 def courseex():
-    if request.method == 'POST' and 'name' in request.form:
-
-        user = session["user"]
-        id = user["localId"]
-        r = random.randint(0, 100000000000000000000)
-        ran = str(r)
-
-        yes = db.collection('users').document(id + "enroll")
-        ans1 = request.form['name']
-        ans = {'name': ans1}
-        data = {ran: ans}
-
-        all = db.collection('alldb').document("all")
-        aldata = {'name': ans1, 'userid': id}
-        alldata = {ran: aldata}
-
-        doc_ref = db.collection('users').document(id + "enroll")
-        doc = doc_ref.get()
-        if doc.exists:
-            yes.update(data)
-        else:
-            yes.set(data)
-        alldoc_ref = db.collection('alldb').document("all")
-        alldoc = alldoc_ref.get()
-        if alldoc.exists:
-            all.update(alldata)
-        else:
-            all.set(alldata)
-
 
     return render_template('brifc.html')
+
+
+
+@app.route('/quiz')
+def quiz():
+    return render_template('quiz.html')
 
 @app.route('/1')
 def hi():
