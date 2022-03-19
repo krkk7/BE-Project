@@ -100,9 +100,18 @@ def dashboard():
     return render_template('student-dashboard.html')
 
 
-@app.route("/single_course")
+@app.route("/single_course",methods=['GET','POST'])
 def single_course():
-    return  render_template("page-courses-computer-technologies.html")
+    name=request.form['name']
+    res1=df.loc[df["Name"]==name]
+    sub=request.form['sub']
+    sml=df.loc[df["Subcategory"]==sub]
+    res=res1.values.tolist()
+    res2=sml.values.tolist()
+    res2=res2[:6]
+    return  render_template("signlec.html",data=res,sm=res2)
+
+
 @app.route("/contact")
 def cou():
     return render_template('page-contact-style3.html')
@@ -212,7 +221,8 @@ def profile():
 
 @app.route("/course")
 def course():
-    return render_template('course.html')
+    res=df.values.tolist()
+    return render_template('course.html',res=res)
 
 @app.route('/choose',methods=['GET','POST'])
 def choose():

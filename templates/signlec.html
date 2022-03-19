@@ -21,6 +21,8 @@
 <link href="../static/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
 <link href="../static/images/apple-touch-icon-144x144.png" rel="apple-touch-icon" sizes="144x144">
 
+<link rel="stylesheet" href="../static/1/css/scroll-down-animation.css">
+    <link rel="stylesheet" href="../static/1/css/styles.css">
 <!-- Stylesheet -->
 <link href="../static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="../static/css/jquery-ui.min.css" rel="stylesheet" type="text/css">
@@ -284,115 +286,64 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<form action="{{url_for('single_course')}}" method="post">
-{% for i in res%}
-
-
-<div style="padding-left:20px;padding-top:5px">
-    <div class="row">
-      <div class="col-">
-        <img src="../static/img/6.jpg"/>
-      </div>
-      <div class="col-sm">
-     <p style="font-size:14px">   {{i[1]}}</p>
-     <p style="font-size:14px">Duration {{i[2]}}</p>
-     <p style="font-size:14px">Level : {{i[4]}}</p>
-     <p style="font-size:14px">Type : {{i[8]}}</p>
-<p style="font-size:14px">Institution : {{i[5]}}</p>
-<input name="name" value="{{i[1]}}" style="display:none"/>
-<input name="sub" value="{{i[7]}}" style="display:none"/>
-
-<button type="submit" class="btn btn-success" style="font-size:14px">Details</button>
-
-</div>
-
+  <div class="row">
+    <div class="col-md-4 col-lg-4 offset-md-0"><img src="../static/img/6.jpg"></div>
+    <div class="col-lg-8">
+        <h1 style="padding-top:10px;font-size:36px">{{data[0][1]}}</h1>
+        <p style="padding-top:10px;font-size:25px">This course gives knowlege of {{data[0][6]}} . it {{data[0][4]}} level</p>
+        
     </div>
+</div>
+<h1 style="font-size:20px">About this course</h1>
+<ul>
+    <li style="font-size:20px">This course conduct by {{data[0][5]}}</li>
+    <li style="font-size:20px">Duration of course {{data[0][2]}}</li>
+    <li style="font-size:20px">Level : {{data[0][4]}}</li>
+    <li style="font-size:20px">Type : {{data[0][8]}}</li>
+</ul>
+<div class="row">
+    <div class="col-lg-2">
+        <p style="font-size:20px">Add to Cart</p>
+    </div>
+    <div class="col-lg-6">
+        <p style="font-size:20px;color:gold">Price : {{data[0][3]}}</p>
+    </div>
+    <div class="col"><button class="btn btn-success" type="button" style="font-size:25px">Enroll</button></div>
+</div>
+<div><div>
+  <div>
+    <h3>Similar courses :</h3>
+    {%for j in sm%}
+
+    <div style="padding-left:20px;padding-top:5px">
+      <div class="row">
+        <div class="col-">
+          <img src="../static/img/6.jpg"/>
+        </div>
+        <div class="col-sm">
+       <p style="font-size:14px">   {{j[1]}}</p>
+       <p style="font-size:14px">Duration {{j[2]}}</p>
+       <p style="font-size:14px">Level : {{j[4]}}</p>
+       <p style="font-size:14px">Type : {{j[8]}}</p>
+  <p style="font-size:14px">Institution : {{j[5]}}</p>
+  <input name="name" value="{{j[1]}}" style="display:none"/>
+  <input name="sub" value="{{j[7]}}" style="display:none"/>
+  
+  <button type="submit" class="btn btn-success" style="font-size:14px">Details</button>
+  
   </div>
-  <hr style="border-top: 3px solid #bbb;" >
+  
+      </div>
+    </div>
+    <hr style="border-top: 3px solid #bbb;" >
+  
+   
+    {% endfor%}
+  </div>
 
 
-{% endfor%}
-</form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div></div>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
 
 
