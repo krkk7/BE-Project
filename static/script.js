@@ -20,7 +20,7 @@ for(var i = 0 ; i < 4 ; i++){
     var dv = document.createElement("div");
     var ch = document.createElement("button");
     ch.setAttribute("data-index",i);
-    ch.setAttribute("class","btn btn-primary rounded-pill mb-2");
+    ch.setAttribute("class","btn  rounded-pill mb-2");
     choiceArray.push(ch);
     divArray.push(dv);
 }
@@ -135,14 +135,14 @@ function viewResult(){
     var form = document.createElement("form");      //Create form for storing highscore
 
     var label = document.createElement("label");    //label
-    label.textContent = "Enter Name : ";
+    label.textContent = "Enter Name for certifaction (same name in profile): ";
 
     var text = document.createElement("input");     //textbox for inputting user name
     text.setAttribute("id","nameInput");
     text.setAttribute("class","ml-3");
 
     var scoreButton = document.createElement("button");     //Submit User score
-    scoreButton.setAttribute("class","btn btn-primary rounded-pill mb-2 ml-3 mt-2");
+    scoreButton.setAttribute("class","btn btn-primary rounded-pill mb-2 ml-3 mt-2","color:red");
     scoreButton.textContent = "Submit";
     
     form.appendChild(label);
@@ -270,16 +270,6 @@ function showHighScores(){
  
     navlink.style.display = "none";
 
-    // Go Back button to go to start page
-    var goback = document.createElement("button");
-    goback.setAttribute("class","btn btn-primary rounded-pill mb-2 mt-4 ml-2");
-    goback.textContent = "Go Back";
-    btnDiv.appendChild(goback);
-    
-    // Event listener for go back button opens index.html page
-    goback.addEventListener("click",function(){
-        window.location= "index.html";
-    });
 
     // Clear Highscores button : clears localStorage
     var clearscores = document.createElement("button");

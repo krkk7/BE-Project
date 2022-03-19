@@ -95,10 +95,6 @@ def login():
     return  render_template("login.html")
 
 
-@app.route("/dashboard",methods=['GET','POST'])
-def dashboard():
-    return render_template('student-dashboard.html')
-
 
 @app.route("/single_course",methods=['GET','POST'])
 def single_course():
@@ -111,10 +107,6 @@ def single_course():
     res2=res2[:6]
     return  render_template("signlec.html",data=res,sm=res2)
 
-
-@app.route("/contact")
-def cou():
-    return render_template('page-contact-style3.html')
 
 
 @app.route("/signup",methods=['GET','POST'])
@@ -150,10 +142,19 @@ def update():
         country=request.form['country']
         
         topic=request.form['topic']
-        
+        yes=db.collection('users').document(id)
         file=request.files['file']
         data = {'name':name,'lastname':lastname,'address1':address1,'state':state,'email':email,'education':education,'country':country,'topic':topic}
-        db.collection('users').document(id).set(data)
+        doc_ref =db.collection('users').document(id)
+        doc = doc_ref.get()
+        if doc.exists:
+            yes.update(data)
+        else:
+            yes.set(data)
+            sdata={'flag':0}
+            db.collection('users').document(id).update(sdata)
+    
+
         pathc="users/"+id
         storage.child(pathc).put(file)
         return redirect('home')
@@ -224,20 +225,6 @@ def course():
     res=df.values.tolist()
     return render_template('course.html',res=res)
 
-@app.route('/choose',methods=['GET','POST'])
-def choose():
-    if request.method == 'POST' and 'ans' in request.form:
-        ans=request.form['ans']
-        k=df.loc[df['Category']== ans]
-        vals=k.values
-        data=vals.tolist()
-        return render_template('1.html',data=k)
-
-
-
-
-    return render_template('choose.html')
-
 @app.route('/eachcourse',methods=['GET','POST'])
 def eachcourse():
     if request.method == 'POST' and 'ans1' in request.form:
@@ -272,7 +259,7 @@ def select():
         all = db.collection('alldb').document("all")
         aldata = {'name': ans1, 'userid': id,'rate':rat}
         alldata = {ran: aldata}
-
+        
         doc_ref = db.collection('users').document(id + "enroll")
         doc = doc_ref.get()
         if doc.exists:
@@ -293,7 +280,39 @@ def select():
 
 @app.route('/courseex', methods=['GET', 'POST'])
 def courseex():
+    user = session["user"]
+    id = user["localId"]
+    sdata={'flag':1}
+    result=db.collection('users').document(id).get()
+    if(result['flag'==0]):
+        db.collection('users').document(id).update(sdata)
+    r = random.randint(0, 100000000000000000000)
+    ran = str(r)
+    rat=request.form['age']
 
+    yes = db.collection('users').document(id + "enroll")
+    ans1 = request.form['name']
+    ans = {'name': ans1,'rate':rat}
+    data = {ran: ans}
+
+    all = db.collection('alldb').document("all")
+    aldata = {'name': ans1, 'userid': id,'rate':rat}
+    alldata = {ran: aldata}
+        
+    doc_ref = db.collection('users').document(id + "enroll")
+    doc = doc_ref.get()
+    if doc.exists:
+        yes.update(data)
+    else:
+        yes.set(data)
+    alldoc_ref = db.collection('alldb').document("all")
+    alldoc = alldoc_ref.get()
+    if alldoc.exists:
+        all.update(alldata)
+    else:
+        all.set(alldata)
+    
+    
     return render_template('brifc.html')
 
 
