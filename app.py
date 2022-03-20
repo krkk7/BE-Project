@@ -24,12 +24,12 @@ import csv
 
 
 df = pd.read_csv('course.csv')
-selected_features=['Name','Type','Category','Course_organization','Subcategory']
+selected_features=['Name','Type','Category','Subcategory','Course_organization']
 
 for feature in selected_features:
     df[feature]=df[feature].fillna('')
 
-combined_features=df['Name']+''+df['Type']+''+df['Category']+''+df['Course_organization']+''+df['Subcategory']
+combined_features=df['Name']+''+df['Type']+''+df['Category']+''+df['Subcategory']+''+df['Course_organization']
 vectorizer=TfidfVectorizer()
 feature_vectors=vectorizer.fit_transform(combined_features)
 similarity=cosine_similarity(feature_vectors)
@@ -70,14 +70,59 @@ app.secret_key="kesavan99"
 def home():
     user=session["user"]
     id=user["localId"]
-    st=db.collection('users').document(id).get()
-    dat=st.to_dict()
-    targ=dat['topic']
-    tar=df.loc[df["Subcategory"]==targ]
-    res1=tar.values.tolist()
-  
 
-    return render_template('index.html',data=res1)
+
+    relt=db.collection('users').document(id).get()
+    result=relt.to_dict()
+    if(result['flag']==0):
+
+        st=db.collection('users').document(id).get()
+        dat=st.to_dict()
+        targ=dat['topic']
+        tar=df.loc[df["Subcategory"]==targ]
+        res=tar.values.tolist()
+
+    if(result['flag']==1):
+
+        pathc="users/"+id
+        tot=[]
+        st=db.collection('users').document(id+"enroll").get()
+        so=st.to_dict()
+        l=[]
+        ans=[]
+        for i in so:
+            k=so[i]['name']
+        l.append(k)
+        for c in l:
+            arr=np.arange(200)
+            list_of_all_titles=df['Name'].tolist()
+            find_close_match=difflib.get_close_matches(c,list_of_all_titles)
+            close_match=find_close_match[0]
+            index_of_the_movie=int(df[df.Name==close_match]['index'].values[0])
+            similarity_score=list(enumerate(similarity[index_of_the_movie]))
+            sorted_similar_movies=sorted(similarity_score,key= lambda x:x[1], reverse=True)
+            i=1
+            
+            
+            lst=[]
+            lk=[]
+            for course in sorted_similar_movies:
+                index=course[0]
+                title_from_index=df[df.index==index]['Name'].values[0]
+                if i<3:
+                    lst.append(title_from_index)
+                  
+                    i+=1
+            tot.append(lst)
+        res=[]
+        for j in tot:
+            for y in j:
+                index1=int(df[df.Name==y]['index'].values[0])
+                jk=df.loc[index1]
+                res.append(jk)
+
+
+    return render_template('index.html',data=res)
 
 
 @app.route("/", methods =['GET', 'POST'])
@@ -226,20 +271,6 @@ def course():
     res=df.values.tolist()
     return render_template('course.html',res=res)
 
-@app.route('/eachcourse',methods=['GET','POST'])
-def eachcourse():
-    if request.method == 'POST' and 'ans1' in request.form:
-        name=request.form['ans1']
-        price=request.form['price']
-        level=request.form['level']
-        org=request.form['org']
-        type=request.form['type']
-        category=request.form['category']
-        subcategory=request.form['subcategory']
-        duration=request.form['duration']
-        l=[name,price,level,org,type,category,subcategory,duration]
-    return  render_template('eachcourse.html',data=l)
-
 
 
 @app.route('/select', methods=['GET', 'POST'])
@@ -298,27 +329,46 @@ def courseex():
     ans = {'name': ans1}
     data = {ran: ans}
 
-    all = db.collection('alldb').document("all")
     aldata = {'name': ans1, 'userid': id}
     alldata = {ran: aldata}
         
     doc_ref = db.collection('users').document(id + "enroll")
     doc = doc_ref.get()
-    alldoc_ref = db.collection('alldb').document("all")
-    alldoc = alldoc_ref.get()
-    if alldoc.exists:
-        all.update(alldata)
-    else:
-        all.set(alldata)
     if doc.exists:
         yes.update(data)
     else:
         yes.set(data)
     
     
-    return render_template('brifc.html')
+    return render_template('brifc.html',data=ans1)
 
+@app.route('/thankyou', methods=['GET', 'POST'])
+def thankyou():
+    ans=request.form['name']
+    rat=request.form['rate']
+    user = session["user"]
+    id = user["localId"]
+    r = random.randint(0, 100000000000000000000)
+    ran = str(r)
+        
+    all = db.collection('alldb').document("all")
+    aldata = {'name': ans, 'userid': id,'rate':rat}
+    alldata = {ran: aldata}
+        
+    alldoc_ref = db.collection('alldb').document("all")
+    alldoc = alldoc_ref.get()
+    if alldoc.exists:
+        all.update(alldata)
+    else:
+        all.set(alldata)
 
+    return render_template('thank.html')
+
+@app.route('/feedback', methods=['GET', 'POST'])
+def feedback():
+    ans=request.form['tar']
+
+    return render_template('feedback.html',data=ans)
 
 @app.route('/quiz')
 def quiz():

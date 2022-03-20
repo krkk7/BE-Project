@@ -20,12 +20,27 @@
 <link href="../static/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
 <link href="../static/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
 <link href="../static/images/apple-touch-icon-144x144.png" rel="apple-touch-icon" sizes="144x144">
-
+<!-- Font Awesome -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.css"
+  rel="stylesheet"
+/>
 <!-- Stylesheet -->
 <link href="../static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="../static/css/jquery-ui.min.css" rel="stylesheet" type="text/css">
 <link href="../static/css/animate.css" rel="stylesheet" type="text/css">
 <link href="../static/css/css-plugin-collections.css" rel="stylesheet"/>
+<link href="../static/pdf.css" rel="stylesheet"/>
 <!-- CSS | menuzord megamenu skins -->
 <link id="menuzord-menu-skins" href="../static/css/menuzord-skins/menuzord-rounded-boxed.css" rel="stylesheet"/>
 <!-- CSS | Main style file -->
@@ -66,7 +81,11 @@
 <![endif]-->
 </head>
 <body class="">
-  
+  <script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"
+></script>
+
 <div id="wrapper" class="clearfix">
   <!-- preloader -->
   <div id="preloader">
@@ -287,8 +306,171 @@
 
 
 
+  <div class="container-fluid">
+  {{data}}
+    <div class="col" class="b1" style="padding-top:10px;background:#F10086;height:100%;width:100%;">
+      <div class="col" class="b2" style="padding-top:10px;background:#711A75; height:40%;width:100%;">
+        
 
-hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+        <div
+      >
+      <div >
+
+        <div class="top-bar">
+          <button class="btn" id="prev-page">
+            <i class="fas fa-arrow-circle-left"></i> Prev Page
+          </button>
+          <button class="btn" id="next-page">
+            Next Page <i class="fas fa-arrow-circle-right"></i>
+          </button>
+          <span class="page-info">
+            Page <span id="page-num"></span> of <span id="page-count"></span>
+          </span>
+        </div>
+    
+        <canvas id="pdf-render"></canvas>
+    
+        <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+<style>
+  .scrollspy-example-collapsible {
+    position: relative;
+    height: 200px;
+    overflow: auto;
+  }
+</style>
+{% set name = data %}
+<div style="padding-left:45%">
+  <form  class="form-transparent clearfix" action="{{url_for('feedback')}}" method="post">
+<button type="submit" style="font-size: 24px;" class="k">END MODULE</button>
+<input value="{{name}}"  name="tar" style="display:none"   />  
+</form>
+</div>
+      </div>
+    </div>
+
+  </div>
+  
+
+
+
+<script>
+  const url = '../static/12.pdf';
+
+let pdfDoc = null,
+  pageNum = 1,
+  pageIsRendering = false,
+  pageNumIsPending = null;
+
+const scale = 1.5,
+  canvas = document.querySelector('#pdf-render'),
+  ctx = canvas.getContext('2d');
+
+// Render the page
+const renderPage = num => {
+  pageIsRendering = true;
+
+  // Get page
+  pdfDoc.getPage(num).then(page => {
+    // Set scale
+    const viewport = page.getViewport({ scale });
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+
+    const renderCtx = {
+      canvasContext: ctx,
+      viewport
+    };
+
+    page.render(renderCtx).promise.then(() => {
+      pageIsRendering = false;
+
+      if (pageNumIsPending !== null) {
+        renderPage(pageNumIsPending);
+        pageNumIsPending = null;
+      }
+    });
+
+    // Output current page
+    document.querySelector('#page-num').textContent = num;
+  });
+};
+
+// Check for pages rendering
+const queueRenderPage = num => {
+  if (pageIsRendering) {
+    pageNumIsPending = num;
+  } else {
+    renderPage(num);
+  }
+};
+
+// Show Prev Page
+const showPrevPage = () => {
+  if (pageNum <= 1) {
+    return;
+  }
+  pageNum--;
+  queueRenderPage(pageNum);
+};
+
+// Show Next Page
+const showNextPage = () => {
+  if (pageNum >= pdfDoc.numPages) {
+    return;
+  }
+  pageNum++;
+  queueRenderPage(pageNum);
+};
+
+// Get Document
+pdfjsLib
+  .getDocument(url)
+  .promise.then(pdfDoc_ => {
+    pdfDoc = pdfDoc_;
+
+    document.querySelector('#page-count').textContent = pdfDoc.numPages;
+
+    renderPage(pageNum);
+  })
+  .catch(err => {
+    // Display error
+    const div = document.createElement('div');
+    div.className = 'error';
+    div.appendChild(document.createTextNode(err.message));
+    document.querySelector('body').insertBefore(div, canvas);
+    // Remove top bar
+    document.querySelector('.top-bar').style.display = 'none';
+  });
+
+// Button Events
+document.querySelector('#prev-page').addEventListener('click', showPrevPage);
+document.querySelector('#next-page').addEventListener('click', showNextPage);
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -541,7 +723,7 @@ hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
     </div>
   </footer>
   <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
-</div>
+</box>
 <!-- end wrapper -->
 
 <!-- Footer Scripts -->
