@@ -690,17 +690,32 @@
     </section>
           <section>
             <h3> Recommendation course for you:</h3>
-      {% for i in data%}
-      <div class="container">
-        <div class="row">
-          <div class="col">
-  <img src="../static/img/6.jpg">
-</div>
-<div style="marignleft:90px" class="col">
-  <p>{{i}}</p>
-</div>
-</div>
-</div>
+      {% for j in data%}
+      <form action="{{url_for('single_course')}}" method="post">
+        <div style="padding-left:20px;padding-top:5px">
+          <div class="row">
+            <div class="col-">
+              <img src="../static/img/6.jpg"/>
+            </div>
+            <div class="col-sm">
+           <p style="font-size:14px">   {{j[1]}}</p>
+           <p style="font-size:14px">Duration {{j[2]}}</p>
+           <p style="font-size:14px">Level : {{j[4]}}</p>
+           <p style="font-size:14px">Type : {{j[8]}}</p>
+      <p style="font-size:14px">Institution : {{j[5]}}</p>
+      <input name="name" value="{{j[1]}}" style="display:none"/>
+      <input name="sub" value="{{j[7]}}" style="display:none"/>
+      
+      <button type="submit" class="btn btn-success" style="font-size:14px">Details</button>
+      
+      </div>
+      
+          </div>
+        </div>
+      </form>
+    
+        <hr style="border-top: 3px solid #bbb;" >
+      
 {% endfor %}
 
           </section>

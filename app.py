@@ -72,11 +72,12 @@ def home():
     id=user["localId"]
     st=db.collection('users').document(id).get()
     dat=st.to_dict()
-    tar=dat['topic']
-    res1=df['Name'].tolist()
-    res=res1[:6]
+    targ=dat['topic']
+    tar=df.loc[df["Subcategory"]==targ]
+    res1=tar.values.tolist()
+  
 
-    return render_template('index.html',data=res)
+    return render_template('index.html',data=res1)
 
 
 @app.route("/", methods =['GET', 'POST'])
@@ -283,34 +284,36 @@ def courseex():
     user = session["user"]
     id = user["localId"]
     sdata={'flag':1}
-    result=db.collection('users').document(id).get()
-    if(result['flag'==0]):
+    
+    relt=db.collection('users').document(id).get()
+    result=relt.to_dict()
+    if(result['flag']==0):
         db.collection('users').document(id).update(sdata)
+            
     r = random.randint(0, 100000000000000000000)
     ran = str(r)
-    rat=request.form['age']
 
     yes = db.collection('users').document(id + "enroll")
     ans1 = request.form['name']
-    ans = {'name': ans1,'rate':rat}
+    ans = {'name': ans1}
     data = {ran: ans}
 
     all = db.collection('alldb').document("all")
-    aldata = {'name': ans1, 'userid': id,'rate':rat}
+    aldata = {'name': ans1, 'userid': id}
     alldata = {ran: aldata}
         
     doc_ref = db.collection('users').document(id + "enroll")
     doc = doc_ref.get()
-    if doc.exists:
-        yes.update(data)
-    else:
-        yes.set(data)
     alldoc_ref = db.collection('alldb').document("all")
     alldoc = alldoc_ref.get()
     if alldoc.exists:
         all.update(alldata)
     else:
         all.set(alldata)
+    if doc.exists:
+        yes.update(data)
+    else:
+        yes.set(data)
     
     
     return render_template('brifc.html')
