@@ -23,6 +23,7 @@ from firebase_admin import firestore
 import csv
 
 
+
 df = pd.read_csv('course.csv')
 selected_features=['Name','Type','Category','Subcategory','Course_organization']
 
