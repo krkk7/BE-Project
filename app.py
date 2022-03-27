@@ -373,7 +373,16 @@ def feedback():
 
 @app.route('/quiz')
 def quiz():
+    
     return render_template('quiz.html')
+
+@app.route('/score', methods=['GET', 'POST'])
+def score():
+    ans1=request.form['fav_language']
+    ans3=request.form['db']
+    ans2=request.form['age']
+    res=ans1+ans2+ans3
+    return render_template('result.html',data=res)
 
 @app.route('/1')
 def hi():
