@@ -13,8 +13,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 from flask import Flask , render_template, request, redirect, url_for, session, flash
-from flask import Flask, jsonify, request
-import numpy as np
+from flask import jsonify, 
 import  pyrebase
 
 import firebase_admin
