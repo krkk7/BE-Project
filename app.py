@@ -367,7 +367,6 @@ def courseex():
 def thankyou():
     ans=request.form['name']
     rat=request.form['rate']
-    
     scot=request.form['data']
     kk='[{"feed": "positive", "text": "'+ans+'" },{  "feed": "jkjkj",   "text": "good" }]'
     TweetDataSubset=pd.read_json(kk)
@@ -465,16 +464,21 @@ def thankyou():
     ran = str(r)
         
     all = db.collection('alldb').document("all")
-    aldata = {'userid': id,'rate':rat,'sub':sub,'score':sco,'feedback':result}
-    alldata = {ran: aldata}
+    ext = db.collection('inv').document(id)
+    alldata = {'userid': id,'id':indx,'rate-level':rat,'sub':sub,'score':sco,'rate':result}
+    alldata = {ran: alldata}
         
     alldoc_ref = db.collection('alldb').document("all")
     alldoc = alldoc_ref.get()
+    aldoc_ref = db.collection('alldb').document(id)
+    aldoc = aldoc_ref.get()
     if alldoc.exists:
         all.update(alldata)
+        ext.update(alldata)
     else:
         all.set(alldata)
-
+        ext.set(alldata)
+   
     return render_template('thank.html')
 
 @app.route('/feedback', methods=['GET', 'POST'])
@@ -526,7 +530,7 @@ def hi():
 
 
 
-    return render_template('2.html',data=k)
+    return render_template('1.html',data=k)
 
 
 
