@@ -367,9 +367,94 @@ def courseex():
 def thankyou():
     ans=request.form['name']
     rat=request.form['rate']
-    ans2=request.form['name1']
+    
     scot=request.form['data']
+    kk='[{"feed": "positive", "text": "'+ans+'" },{  "feed": "jkjkj",   "text": "good" }]'
+    TweetDataSubset=pd.read_json(kk)
+    nltk.download("stopwords")
+    stop_words=set(stopwords.words("english"))
+    wordnet = WordNetLemmatizer()
+    def text_preproc(x):
+        x=''.join([word for word in x.split(' ')if word not in stop_words])
+        x=x.encode('ascii','ignore').decode()
+        x=re.sub(r'https*\S+',' ',x)
+        x=re.sub(r'@\S+',' ',x)
+        x=re.sub(r'#\s+',' ',x)
+        x=re.sub(r'\'\w+','',x)
+        x=re.sub('[%s]'% re.escape(string.punctuation),'',x)
+        x=re.sub(r'\w*\d+\w*','',x)
+        x=re.sub(r'\s{2,}','',x)
+        return x
+    TweetDataSubset['clean_text']=TweetDataSubset.text.apply(text_preproc)
+    x_train,x_test,y_train,y_test=train_test_split(TweetDataSubset["clean_text"],TweetDataSubset["feed"],test_size=0.1,shuffle=True)
+    tfidf_vectorizer=TfidfVectorizer(use_idf=True,max_features=100)
+    x_train_vectors_tfidf=tfidf_vectorizer.fit_transform(x_train)
+    x_test_vectors_tfidf=tfidf_vectorizer.transform(x_test)
+    lr_tfidf=MultinomialNB()
+    lr_tfidf.fit(x_train_vectors_tfidf,y_train)
+    y_predict=lr_tfidf.predict(x_test_vectors_tfidf)
+    y_prob=lr_tfidf.predict_proba(x_test_vectors_tfidf)[:]
+    Counter("".join(TweetDataSubset['clean_text']).split()).most_common(100)
+    Positive_pattern_1=r"thanks"
+    Positive_pattern_2=r"thank"
+    Positive_pattern_3=r"good"
+    Positive_pattern_4=r"well"
+    Positive_pattern_5=r"super"
+    Positive_pattern_6=r"awesome"
+    Positive_pattern_7=r"satisfied"
+    Positive_pattern_8=r"great"
     sco=int(scot)
+
+    Postive_Pattern_List=[Positive_pattern_1,Positive_pattern_2,Positive_pattern_3,Positive_pattern_4,Positive_pattern_5,Positive_pattern_6,Positive_pattern_7,Positive_pattern_8]
+
+    Positive_Complex_Pattern=re.compile('|'.join(['(%s)'% i for i in Postive_Pattern_List]),re.IGNORECASE)
+
+
+    Negative_pattern_1=r"cancelled"
+    Negative_pattern_2=r"delayed"
+    Negative_pattern_3=r"trying"
+    Negative_pattern_4=r"please"
+    Negative_pattern_5=r"wait"
+    Negative_pattern_6=r"worst"
+    Negative_pattern_7=r"bad"
+    Negative_pattern_8=r"tough"
+    Negative_Pattern_List=[Negative_pattern_1,Negative_pattern_2,Negative_pattern_3,Negative_pattern_4,Negative_pattern_5,Negative_pattern_6,Negative_pattern_7,Negative_pattern_8]
+
+    Negative_Complex_Pattern=re.compile('|'.join(['(%s)'% i for i in Negative_Pattern_List]),re.IGNORECASE)
+
+    TweetDataSubset["Negative_Sentiment_Flag"]=TweetDataSubset["clean_text"].apply(lambda x:1 if(len(re.findall(Negative_Complex_Pattern,x))>0) else 0)
+
+    TweetDataSubset["Positive_Sentiment_Flag"]=TweetDataSubset["clean_text"].apply(lambda x:1 if(len(re.findall(Positive_Complex_Pattern,x))>0) else 0)
+
+    res=TweetDataSubset.values.tolist()
+    if(sco > 3):
+        boot=1
+    else:
+        boot=0
+    a=res[0][3]
+    b=res[0][4]
+    p2=b-a
+    if(p2 >0 ):
+        feeds=1
+    else:
+        feeds=0
+    raat=int(rat)
+    if(feeds == 1):
+        if(raat == 5):
+            result=raat
+        elif(raat == 4):
+            result=raat+0.5
+        else:
+            result=raat+0.5+boot
+    else:
+        if(raat == 0):
+            result=raat+boot
+        elif(raat==1):
+            result=raat-0.5+boot
+        else:
+            result=raat-0.5+boot
+
+    
     index=request.form['index']
     indx=int(index)
     pgk=df.loc[indx]
@@ -380,7 +465,7 @@ def thankyou():
     ran = str(r)
         
     all = db.collection('alldb').document("all")
-    aldata = {'feedback': ans,'feed2':ans2, 'userid': id,'rate':rat,'sub':sub,'score':sco}
+    aldata = {'userid': id,'rate':rat,'sub':sub,'score':sco,'feedback':result}
     alldata = {ran: aldata}
         
     alldoc_ref = db.collection('alldb').document("all")
