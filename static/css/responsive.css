@@ -6,6 +6,32 @@
 /*==========  Mobile First Method  ==========*/
  
 /* Custom, iPhone Retina */
+
+@media only screen and (max-width : 900px) {
+	.hdl{
+		width: 100%;
+	}
+	.hdl #form_username_email {
+		width: 95%;
+	}
+	.hdl   #form_password{
+		width: 95%;
+	}
+
+	}
+	@media only screen and (min-width : 900px) {
+		
+	
+		.hdl #form_username_email {
+			width: 95%;
+		}
+		
+	.hdl   #form_password{
+		width: 95%;
+	}
+		}
+			
+
 @media only screen and (min-width : 320px) {
 }
 

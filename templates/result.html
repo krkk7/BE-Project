@@ -1,1 +1,19 @@
 <h1>{{data}}</h1>
+
+
+<h1>{{name['Name']}}</h1>
+
+
+
+{{index}}
+
+
+
+<form  class="form-transparent clearfix" action="{{url_for('feedback')}}" method="post">
+    <input value="{{data}}"  name="data" style="display:none"   />  
+    <input value="{{name['Name']}}"  name="sub" style="display:none"   />  
+    <input value="{{index}}"  name="index" style="display:none"   />  
+  
+    <button type="submit" style="font-size: 18px;" class="k">Next</button>
+     </form>
+    

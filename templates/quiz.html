@@ -70,31 +70,33 @@
   <span id="minutes"></span>:<span id="seconds"></span>
 </div>
 
-      
-      
+     
     <div class="ly1">
       <div class="ly2">
 
         <form action="{{url_for('score')}}" method="post">
           <div style="background-color:black;">
           <p> select the  Web language:</p>
-          <input type="radio" id="html" name="fav_language" value="1">
+          <input type="radio" id="html" name="fav_language" value=1>
           <label for="html">javascript</label><br>
-          <input type="radio" id="css" name="fav_language" value="0">
+          <input type="radio" id="css" name="fav_language" value=0>
           <label for="css">Mongodb</label><br>
-          <input type="radio" id="javascript" name="fav_language" value="0">
+          <input type="radio" id="javascript" name="fav_language" value=0>
+         
+
           <label for="javascript">Mysql</label>
+        <br>
+        
         </div> 
           <br><br>
-
           <br>  
         <div style="background-color:black;">
           <p>Which database in Stuctured database:</p>
-          <input type="radio" id="age1" name="age" value="0">
+          <input type="radio" id="age1" name="age" value=0>
           <label for="age1">Mongodb</label><br>
-          <input type="radio" id="age2" name="age" value="1">
+          <input type="radio" id="age2" name="age" value=1>
           <label for="age2">Mysql</label><br>  
-          <input type="radio" id="age3" name="age" value="0">
+          <input type="radio" id="age3" name="age" value=0>
           <label for="age3">Firebase</label>
           
         </div>
@@ -103,18 +105,23 @@
           <br>  
           <div style="background-color:black;">
           <p>Firebase is </p>
-          <input type="radio" id="ae1" name="db" value="1">
+          <input type="radio" id="ae1" name="db" value=1>
           <label for="ae1">database</label><br>
-          <input type="radio" id="ae2" name="db" value="0">
+          <input type="radio" id="ae2" name="db" value=0>
           <label for="ae2">Framework</label><br>  
-          <input type="radio" id="ae3" name="db" value="0">
+          <input type="radio" id="ae3" name="db" value=0>
           <label for="ae3">Plugins</label><br><br>
         </div>
-      
+        
+        <input value="{{data['Name']}}"  name="sub" style="display:none"   />  
+        <input value="{{index}}"  name="index" style="display:none"   />  
+
       <div style="padding-top:10px;text-align:center;">
           <input type="submit" value="Submit"  class="subbt"/>
       </div>
         
+
+   
         </form>
         
 

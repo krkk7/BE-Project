@@ -1,6 +1,12 @@
 from datetime import date, datetime
 from pydoc import doc
 import random
+import warnings
+warnings.filterwarnings('ignore')
+
+import re
+import string
+
 import json
 from collections.abc import MutableMapping
 import numpy as np # linear algebra
@@ -11,6 +17,17 @@ import plotly.express as px
 import difflib
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import classification_report,f1_score,accuracy_score,confusion_matrix
+from sklearn.metrics import roc_curve,auc,roc_auc_score
+from nltk.stem.porter import PorterStemmer
+from nltk.stem import WordNetLemmatizer
+import nltk
+from nltk.corpus import stopwords
+import re
+from collections import Counter
 
 from flask import Flask , render_template, request, redirect, url_for, session, flash
 from flask import Flask, jsonify, request
@@ -313,6 +330,9 @@ def select():
 
 @app.route('/courseex', methods=['GET', 'POST'])
 def courseex():
+    index=request.form['index']
+    Float = float(index) 
+    indx=int(Float)
     user = session["user"]
     id = user["localId"]
     sdata={'flag':1}
@@ -341,19 +361,26 @@ def courseex():
         yes.set(data)
     
     
-    return render_template('brifc.html',data=ans1)
+    return render_template('brifc.html',data=ans1,index=indx)
 
 @app.route('/thankyou', methods=['GET', 'POST'])
 def thankyou():
     ans=request.form['name']
     rat=request.form['rate']
+    ans2=request.form['name1']
+    scot=request.form['data']
+    sco=int(scot)
+    index=request.form['index']
+    indx=int(index)
+    pgk=df.loc[indx]
+    sub=pgk['Name']
     user = session["user"]
     id = user["localId"]
     r = random.randint(0, 100000000000000000000)
     ran = str(r)
         
     all = db.collection('alldb').document("all")
-    aldata = {'name': ans, 'userid': id,'rate':rat}
+    aldata = {'feedback': ans,'feed2':ans2, 'userid': id,'rate':rat,'sub':sub,'score':sco}
     alldata = {ran: aldata}
         
     alldoc_ref = db.collection('alldb').document("all")
@@ -367,22 +394,35 @@ def thankyou():
 
 @app.route('/feedback', methods=['GET', 'POST'])
 def feedback():
-    ans=request.form['tar']
+    data=request.form['data']
+    ans2=request.form['index']
+    index=int(ans2)
+    tmp=df.loc[index]
 
-    return render_template('feedback.html',data=ans)
 
-@app.route('/quiz')
+    return render_template('feedback.html',data=data,index=index)
+
+@app.route('/quiz', methods=['GET', 'POST'])
 def quiz():
     
-    return render_template('quiz.html')
+    index=request.form['index']
+    indx=int(index)
+    sub=df.loc[indx]
+    return render_template('quiz.html',data=sub,index=index)
 
 @app.route('/score', methods=['GET', 'POST'])
 def score():
     ans1=request.form['fav_language']
     ans3=request.form['db']
     ans2=request.form['age']
-    res=ans1+ans2+ans3
-    return render_template('result.html',data=res)
+    index=request.form['index']
+    indx=int(index)
+    sub=df.loc[indx]
+    a=int(ans1)
+    b=int(ans2)
+    c=int(ans3)
+    res=a+b+c
+    return render_template('result.html',data=res,name=sub,index=indx)
 
 @app.route('/1')
 def hi():

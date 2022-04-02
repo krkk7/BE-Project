@@ -69,27 +69,27 @@
 </head>
 <body class="">
   <!-- Start main-content -->
-  <div class="main-content"> 
+  <div > 
     <!-- Section: home -->
-    <section id="home" class="divider parallax fullscreen layer-overlay overlay-white-9" data-bg-img="{{url_for('static',filename='images/bg/bg1.jpg')}}">
+    <section id="home" class="sik " data-bg-img="{{url_for('static',filename='images/bg/bg1.jpg')}}">
       <div class="display-table">
         <div class="display-table-cell">
-          <div class="container">
+          <div style="width:98%;padding-left:1%;padding-right:1%;">
             <div class="row">
-              <div class="col-md-6 col-md-push-3">
-                <div class="text-center mb-60"><a href="#" class=""><img alt="" src="{{url_for('static',filename='images/logo-wide.png')}}"></a></div>
+              <div class="col-md-6 hdl col-md-push-3">
+                <div class="text-center  mb-60"><a href="#" class=""><img alt="" src="{{url_for('static',filename='images/logo-wide.png')}}"></a></div>
                 <h4 class="text-theme-colored mt-0 pt-5"> signup</h4>
                 <form  class="form-transparent clearfix" action="{{url_for('signup')}}" method="post">
                   <div class="row">
                     <div class="form-group col-md-12">
                       <label for="form_username_email">Username/Email</label>
-                      <input id="form_username_email" name="email" placeholder="Enter Your Email" style="width:580px" class="textbox"  class="form-control" type="text">
+                      <input style="width:90%" id="form_username_email" name="email" placeholder="Enter Your Email" style="width:580px" class="textbox"  class="form-control" type="text">
                     </div>
                   </div>
                   <div class="row">
                     <div class="form-group col-md-12">
                       <label for="form_password">Password</label>
-                      <input id="form_password" name="password"placeholder="Enter Your password" style="width:580px" class="textbox" class="form-control" type="text">
+                      <input style="width:90%" id="form_password" name="password"placeholder="Enter Your password" style="width:580px" class="textbox" class="form-control" type="text">
                     </div>
                   </div>
 
@@ -99,6 +99,7 @@
                   <div class="clear text-center pt-10">
                 <p></p><p></p>    
                 </div>
+                <br>
                   <div class="clear text-center pt-10">
                     <a class="btn btn-dark btn-lg btn-block no-border mt-15 mb-15" href="#" data-bg-color="#3b5998">signup with facebook</a>
                     <a class="btn btn-dark btn-lg btn-block no-border" href="#" data-bg-color="#00acee">Signup with twitter</a>

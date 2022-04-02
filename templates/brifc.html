@@ -306,10 +306,10 @@
 
 
 
-  <div class="container-fluid">
-  {{data}}
-    <div class="col" class="b1" style="padding-top:10px;background:#F10086;height:100%;width:100%;">
-      <div class="col" class="b2" style="padding-top:10px;background:#711A75; height:40%;width:100%;">
+  <div class="container-fluid" style="font-size:14px;">
+  {{data}}{{index}}
+    <div class="col" class="b15" style="padding-top:10px;background:#F10086;height:100%;width:100%;">
+      <div class="col" class="b42" style="padding-top:10px;background:#711A75; height:40%;width:100%;">
         
 
         <div
@@ -349,11 +349,13 @@
     overflow: auto;
   }
 </style>
-{% set name = data %}
+
 <div style="padding-left:45%">
-  <form  class="form-transparent clearfix" action="{{url_for('feedback')}}" method="post">
-<button type="submit" style="font-size: 24px;" class="k">END MODULE</button>
-<input value="{{name}}"  name="tar" style="display:none"   />  
+  <form  class="form-transparent clearfix" action="{{url_for('quiz')}}" method="post">
+    <input value={{index}}  name="index" style="display:none"   />  
+    <input value={{data}}  name="sub" style="display:none"   />  
+
+    <button type="submit" style="font-size: 18px;" class="k">END MODULE</button>
 </form>
 </div>
       </div>
