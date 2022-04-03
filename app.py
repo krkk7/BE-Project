@@ -138,6 +138,75 @@ def home():
                 index1=int(df[df.Name==y]['index'].values[0])
                 jk=df.loc[index1]
                 res.append(jk)
+    if(result['flag']==2):
+            user=session["user"]
+            id=user["localId"]
+            pathc="users/"+id
+            tot=[]
+            st=db.collection('inv').document(id).get()
+            so = st.to_dict()
+            l=[]
+            for i in so:
+                l.append(so[i])
+            k=json.dumps(l)
+            input= pd.read_json(json.dumps(l))
+            input=input.drop('score',1)
+            input=input.drop('rate-level',1)
+            input=input.drop('userid',1)
+            stt=db.collection('alldb').document('all').get()
+            soo = stt.to_dict()
+            ll=[]
+            for i in soo:
+                ll.append(soo[i])
+            k1=json.dumps(ll)
+            rating = pd.read_json(json.dumps(ll))
+            rating=rating.drop('score',1)
+            rating=rating.drop('rate-level',1)
+
+            usersubset=rating[rating['id'].isin(input['id'].tolist())]
+            usersubsetGroup=usersubset.groupby(['userid'])
+            usersubsetGroup=sorted(usersubsetGroup, key=lambda x: len(x[1]), reverse=True)
+            usersubsetGroup =usersubsetGroup[0:100]
+            pearsonCorrelationDict={}
+            for name,group in usersubsetGroup:
+                group=group.sort_values(by='id')
+                input=input.sort_values(by='id')
+    
+                nRatings=len(group)
+                temp_df=input[input['id'].isin(group['id'].tolist())]
+    
+                tempRatingList=temp_df['rate'].tolist()
+    
+                tempGroupList=group['rate'].tolist()
+    
+                Sxx= sum([i**2 for i in tempRatingList])-pow(sum(tempRatingList),2)/float(nRatings)
+                Syy=sum([i**2 for i in tempGroupList])-pow(sum(tempGroupList),2)/float(nRatings)
+                Sxy=sum(i*j for i,j in zip(tempRatingList,tempGroupList))-sum(tempRatingList)*sum(tempGroupList)
+    
+                if Sxx != 0  and Syy !=0:
+                    pearsonCorrelationDict[name]=Sxy/np.sqrt(Sxx*Syy)
+                else:
+                    pearsonCorrelationDict[name]=0
+            pearsonCorrelationDict.items()
+            pearsonDF=pd.DataFrame.from_dict(pearsonCorrelationDict, orient='index')
+            pearsonDF.columns=['similarityIndex']
+            pearsonDF['userid']=pearsonDF.index
+            pearsonDF.index=range(len(pearsonDF))
+            topUsers=pearsonDF.sort_values(by='similarityIndex',ascending=False)[0:50]
+            topUsersRating=topUsers.merge(rating,left_on='userid',right_on='userid',how='inner')
+            topUsersRating['weightRating']=topUsersRating['similarityIndex']*topUsersRating['rate']
+            temptopUsersRating=topUsersRating.groupby('id').sum()[['similarityIndex','weightRating']]
+            temptopUsersRating.columns=['sum_similarityIndex','sum_weightRating']
+            recommendation_df=pd.DataFrame()
+
+            recommendation_df['weighted average recommendation score']=temptopUsersRating['sum_weightRating']/temptopUsersRating['sum_similarityIndex']
+            recommendation_df['id']=temptopUsersRating.index
+
+            recommendation_df=recommendation_df.sort_values(by='weighted average recommendation score',ascending=False)
+
+            kk=rating.loc[rating['id'].isin(recommendation_df['id'].tolist())]
+            lst=kk.values.tolist()
+            res=lst
 
 
     return render_template('index.html',data=res)
@@ -481,6 +550,10 @@ def thankyou():
         ext.update(alldata)
     else:
         ext.set(alldata)
+        sdata={'flag':2}
+        db.collection('users').document(id).update(sdata)
+    
+
    
     return render_template('thank.html')
 
@@ -516,92 +589,6 @@ def score():
     res=a+b+c
     return render_template('result.html',data=res,name=sub,index=indx)
 
-@app.route('/1')
-def hi():
-
-    user=session["user"]
-    id=user["localId"]
-    pathc="users/"+id
-    tot=[]
-    st=db.collection('inv').document(id).get()
-    so = st.to_dict()
-    l=[]
-    for i in so:
-
-        l.append(so[i])
-    k=json.dumps(l)
-    input= pd.read_json(json.dumps(l))
-    input=input.drop('score',1)
-    input=input.drop('rate-level',1)
-    input=input.drop('userid',1)
-
-
-
-    stt=db.collection('alldb').document('all').get()
-    soo = stt.to_dict()
-    ll=[]
-    for i in soo:
-
-        ll.append(soo[i])
-    k1=json.dumps(ll)
-    rating = pd.read_json(json.dumps(ll))
-    rating=rating.drop('score',1)
-    rating=rating.drop('rate-level',1)
-
-    usersubset=rating[rating['id'].isin(input['id'].tolist())]
-    usersubsetGroup=usersubset.groupby(['userid'])
-    usersubsetGroup=sorted(usersubsetGroup, key=lambda x: len(x[1]), reverse=True)
-    usersubsetGroup =usersubsetGroup[0:100]
-    pearsonCorrelationDict={}
-    for name,group in usersubsetGroup:
-        group=group.sort_values(by='id')
-        input=input.sort_values(by='id')
-    
-        nRatings=len(group)
-        temp_df=input[input['id'].isin(group['id'].tolist())]
-    
-        tempRatingList=temp_df['rate'].tolist()
-    
-        tempGroupList=group['rate'].tolist()
-    
-        Sxx= sum([i**2 for i in tempRatingList])-pow(sum(tempRatingList),2)/float(nRatings)
-        Syy=sum([i**2 for i in tempGroupList])-pow(sum(tempGroupList),2)/float(nRatings)
-        Sxy=sum(i*j for i,j in zip(tempRatingList,tempGroupList))-sum(tempRatingList)*sum(tempGroupList)
-    
-        if Sxx != 0  and Syy !=0:
-            pearsonCorrelationDict[name]=Sxy/np.sqrt(Sxx*Syy)
-        else:
-            pearsonCorrelationDict[name]=0
-    pearsonCorrelationDict.items()
-    pearsonDF=pd.DataFrame.from_dict(pearsonCorrelationDict, orient='index')
-    pearsonDF.columns=['similarityIndex']
-    pearsonDF['userid']=pearsonDF.index
-    pearsonDF.index=range(len(pearsonDF))
-    topUsers=pearsonDF.sort_values(by='similarityIndex',ascending=False)[0:50]
-    topUsersRating=topUsers.merge(rating,left_on='userid',right_on='userid',how='inner')
-    topUsersRating['weightRating']=topUsersRating['similarityIndex']*topUsersRating['rate']
-    temptopUsersRating=topUsersRating.groupby('id').sum()[['similarityIndex','weightRating']]
-    temptopUsersRating.columns=['sum_similarityIndex','sum_weightRating']
-    recommendation_df=pd.DataFrame()
-
-    recommendation_df['weighted average recommendation score']=temptopUsersRating['sum_weightRating']/temptopUsersRating['sum_similarityIndex']
-    recommendation_df['id']=temptopUsersRating.index
-
-    recommendation_df=recommendation_df.sort_values(by='weighted average recommendation score',ascending=False)
-
-    kk=rating.loc[rating['id'].isin(recommendation_df['id'].tolist())]
-
-
-
-
-
-
-
-
-
-
-
-    return render_template('1.html',data=kk)
 
 
 
