@@ -320,38 +320,8 @@ def profile():
     so=st.to_dict()
     l=[]
     ans=[]
-    for i in so:
-        k=so[i]['name']
-        l.append(k)
-    for c in l:
-            arr=np.arange(200)
-            list_of_all_titles=df['Name'].tolist()
-            find_close_match=difflib.get_close_matches(c,list_of_all_titles)
-            close_match=find_close_match[0]
-            index_of_the_movie=int(df[df.Name==close_match]['index'].values[0])
-            similarity_score=list(enumerate(similarity[index_of_the_movie]))
-            sorted_similar_movies=sorted(similarity_score,key= lambda x:x[1], reverse=True)
-            i=1
-            
-            
-            lst=[]
-            lk=[]
-            for course in sorted_similar_movies:
-                index=course[0]
-                title_from_index=df[df.index==index]['Name'].values[0]
-                if i<3:
-                    lst.append(title_from_index)
-                  
-                    i+=1
-            tot.append(lst)
-    res=[]
-    for j in tot:
-        for y in j:
-            index1=int(df[df.Name==y]['index'].values[0])
-            jk=df.loc[index1]
-            res.append(jk)
 
-    return render_template("profile.html",photo=photo,data=data,ml=res)
+    return render_template("profile.html",photo=photo,data=data)
 
 @app.route("/course")
 def course():
@@ -597,3 +567,6 @@ def score():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
