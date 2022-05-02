@@ -58,14 +58,7 @@ cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 
 firebaseConfig = {
-  'apiKey': "AIzaSyBdTOttW-9qyDt7YQYOENqwvy9BwdUlKDE",
-  'authDomain': "studypress-4af82.firebaseapp.com",
-  'projectId': "sstudypress-4af82",
-  'storageBucket': "studypress-4af82.appspot.com",
-  'messagingSenderId': "633006789601",
-  'appId': "1:633006789601:web:f2dd08788b263d476038a0",
-  'measurementId': "G-FSJQR286FC",
-  'databaseURL':""
+  <Baseyourkey here>
 }
 
 firebase=pyrebase.initialize_app(firebaseConfig)
